@@ -1,0 +1,8 @@
+{
+  "name": "judgeme-proxy",
+  "version": "1.0.0",
+  "description": "A secure CORS proxy for Judge.me reviews",
+  "scripts": {
+    "start": "node"
+  }
+}
