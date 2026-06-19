@@ -20,7 +20,7 @@ export default async function handler(req, res) {
   }
 
   // 4. Build the actual Judge.me API URL
-  const url = new URL(`https://judge.me/api/v1${route}`);
+  const url = new URL(`https://api.judge.me/api/v1${route}`);
 
   for (const [key, value] of Object.entries(otherParams)) {
     url.searchParams.append(key, value);
@@ -31,7 +31,7 @@ export default async function handler(req, res) {
     const response = await fetch(url.toString(), {
       method: "GET",
       headers: {
-        "api-token": privateToken,
+        "X-Api-Token": privateToken,
         "Content-Type": "application/json",
       },
     });
