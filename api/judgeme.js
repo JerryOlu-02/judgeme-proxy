@@ -30,7 +30,7 @@ export default async function handler(req, res) {
     const options = {
       method: req.method,
       headers: {
-        "api-token": privateToken,
+        "X-Api-Token": privateToken,
         "Content-Type": "application/json",
       },
     };
