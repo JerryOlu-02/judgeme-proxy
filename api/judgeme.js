@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
   // 1. Attach the CORS headers so Shopify browsers don't panic
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
   // Handle browser Preflight checks instantly
@@ -27,18 +27,21 @@ export default async function handler(req, res) {
   }
 
   try {
-    // 5. Fetch from Judge.me securely using the Private token as a Header
-    const response = await fetch(url.toString(), {
-      method: "GET",
+    const options = {
+      method: req.method,
       headers: {
-        "X-Api-Token": privateToken,
+        "api-token": privateToken,
         "Content-Type": "application/json",
       },
-    });
+    };
 
+    if (req.method === "POST") {
+      options.body = JSON.stringify(req.body);
+    }
+
+    const response = await fetch(url.toString(), options);
     const data = await response.json();
 
-    // 6. Send the data back to Shopify
     return res.status(response.status).json(data);
   } catch (error) {
     console.error("Proxy Error:", error);
